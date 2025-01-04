@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="EMI Calculator to calculate monthly installments for loans based on amount, interest rate, and tenure.">
+    <meta name="keywords" content="EMI, Loan, Calculator, Monthly Installments, Web Development, JavaScript">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculate Everything</title>
+    <!-- Bootstrap CSS (can be from CDN or locally) -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    
+<style>
+    body{
+        background-color: #040b14;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+    .navbar{
+        background-color: #333;
+    position: sticky;
+    top: 0;
+    z-index: 1000; /* Ensures the navbar stays above other elements */
+    width: 100%; /* Ensures the navbar takes the full width */
+    color: #fff; /* White text color */
+    }
+    .navbar-brand{
+        color: #ff9900 !important;
+    }
+    .navbar-nav li a {
+        color: black !important;
+        font-weight: bolder;
+        color: wheat !important;
+        gap: 10px;
+        border-radius: 10px;
+    }
+    .navbar-nav li a:hover{
+        background-color: #ffffff;
+        color: #000000 !important;
+        border: #ff9900 !important;
+    }
+
+    /* Card Styles */
+    .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease, border-radius 0.3s ease;
+        border-radius: 15px; /* Rounded corners */
+        overflow: hidden; /* To ensure the rounded corners work on images */
+    }
+
+    /* Card Hover Effect */
+    .card:hover {
+        transform: translateY(-10px); /* Lifts the card up slightly */
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); /* Adds a shadow around the card */
+        border-radius: 20px; /* Increases the roundness on hover */
+    }
+
+    /* Card Body */
+    .card-body {
+        background-color: #fff; /* White background for the card */
+        border-radius: 15px;
+    }
+
+    /* Card Titles */
+    .card-title {
+        color: #ff9900; /* Orange color for card titles */
+    }
+
+    /* Card Links */
+    .card-link {
+        color: #ff9900; /* Orange color for links */
+    }
+    .btn{
+        background-color: #000000;
+        color: rgb(255, 255, 255);
+        border-radius: 15px;
+    }
+
+    /* Button Hover */
+    .btn:hover {
+        border-radius: 15px;
+        background-color: #ff9900; /* Orange color for button hover */
+        border-color: #000000; /* Button border color on hover */
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+
+    /* Make sure the images in cards have rounded corners */
+    .card-img-top {
+        border-radius: 15px;
+    }
+
+    h2 {
+    font-size: 2.5rem;
+    color: #ff9900;
+    text-align: center;
+    margin: 20px 0;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.contact-container {
+    display: flex;
+    gap: 40px;
+    max-width: 1100px;
+    width: 90%;
+    background: #ffffff00;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 30px;
+}
+
+/* Form Styles */
+form {
+    flex: 1 1 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+form h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #ffffff;
+    border-left: 4px solid #ff9900;
+    padding-left: 10px;
+    text-transform: uppercase;
+}
+
+label {
+    font-weight: bold;
+    font-size: 0.9rem;
+    color: wheat;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background: #333;
+    transition: border-color 0.3s;
+    color: white;
+    font-weight: 900;
+}
+
+input:focus, textarea:focus {
+    border-color: #fec544;
+    outline: none;
+}
+
+textarea {
+    min-height: 120px;
+}
+
+button {
+    background-color: #ff9900;
+    color: rgb(0, 0, 0);
+    border: none;
+    padding: 10px 15px;
+    font-size: 1rem;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+button:hover {
+    background-color: #ff9900;
+    box-shadow: 0 0 10px rgb(106, 105, 107);
+}
+
+/* Contact Info Styles */
+.contact-info {
+    flex: 1 1 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    text-align: left;
+    padding-left: 20px;
+    border-left: 2px solid #ddd;
+}
+
+.footer-address, .footer-social-media {
+    background: #040b14;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.footer-address h5, .footer-social-media h5 {
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+    color: #ff9900;
+    border-bottom: 2px solid #ffffff;
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+.footer-address p {
+    font-size: 1.2rem;
+    color: #cdcdcd;
+    margin: 5px 0;
+    font-weight: bolder;
+}
+
+.footer-address p i {
+    margin-right: 10px;
+    color: #fec544;
+}
+.footer-address i:hover {
+    background: #ffffff;
+    color: #ff9900; /* Add a color change for the icon */
+    border-radius: 50%; /* Add rounded effect */
+    padding: 5px; /* Add a slight padding */
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.7), 0 0 15px rgba(254, 197, 68, 0.5); /* Add green glow */
+    transition: all 0.3s ease-in-out; /* Smooth transition */
+}
+
+/* Social Media */
+.footer-social-media {
+    text-align: left;
+}
+
+.social-icons {
+    display: flex;
+    gap: 10px;
+}
+
+.social-icon {
+    text-decoration: none;
+    color: white;
+    background: #ff9900;
+    padding: 10px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+
+
+/* Footer Styles */
+footer {
+    text-align: center;
+    margin-top: 20px;
+    padding: 10px 0;
+    background-color: #040b14;
+    font-size: 1.1rem;
+    color: #ffffff;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+footer .developer {
+    font-weight: bold;
+    color: #ff9900;
+    transition: text-shadow 0.3s;
+}
+
+footer .developer:hover {
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.9);
+    
+}
+.text-center {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.text-center h3 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #ff9900; /* Orange color for the header */
+    margin-bottom: 15px;
+}
+
+.text-center p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #333; /* Dark color for readability */
+    max-width: 800px;
+    margin: 0 auto; /* Centers the paragraph */
+    padding: 0 20px; /* Adds padding for small screens */
+}
+
+.text-center p {
+    background-color: #f7f7f7; /* Light background for contrast */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    padding: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .contact-container {
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    form, .contact-info {
+        flex: 1 1 100%;
+        text-align: left;
+    }
+}
+</style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="#">Calculator</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#home">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="calculator.html">Calculator</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="emi.html" target="_blank">EMI Calculator</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="agecalculator.html">Age Calculator</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#currency-converter">Currency Converter</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Container for cards -->
+    <div class="container mt-5">
+        <div class="row">
+            <!-- Card 1: Calculator -->
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="card h-100 d-flex flex-column">
+                    <img src="https://via.placeholder.com/150" class="card-img-top" alt="Calculator">
+                    <div class="card-body">
+                        <h5 class="card-title">Calculator</h5>
+                        <p class="card-text">A simple calculator to perform basic arithmetic operations.</p>
+                        <a href="#calculator" class="btn ">Go to Calculator</a>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Card 2: EMI Calculator -->
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="card h-100 d-flex flex-column">
+                    <img src="https://via.placeholder.com/150" class="card-img-top" alt="EMI Calculator">
+                    <div class="card-body">
+                        <h5 class="card-title">EMI Calculator</h5>
+                        <p class="card-text">Calculate your EMI based on loan amount, interest, and tenure.</p>
+                        <a href="emi.html" target="_blank" class="btn ">Go to EMI Calculator</a>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Card 3: Currency Converter -->
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="card h-100 d-flex flex-column">
+                    <img src="https://via.placeholder.com/150" class="card-img-top" alt="Currency Converter">
+                    <div class="card-body">
+                        <h5 class="card-title">Currency Converter</h5>
+                        <p class="card-text">Convert your currency from one to another with up-to-date rates.</p>
+                        <a href="#currency-converter" class="btn ">Go to Converter</a>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Card 4: Conversion Tool -->
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="card h-100 d-flex flex-column">
+                    <img src="https://via.placeholder.com/150" class="card-img-top" alt="Conversion Tool">
+                    <div class="card-body">
+                        <h5 class="card-title">Conversion Tool</h5>
+                        <p class="card-text">Convert between various units like storage (GB to MB), lengths (m to cm), volumes (liters to milliliters), and time (hours to minutes).</p>
+                        <a href="#conversion-tool" class="btn ">Go to Converter</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<br>
+<div class="text-center">
+    <h3>Features of the Calculators</h3>
+    <p>
+        Our calculators offer a variety of useful features, including a basic arithmetic calculator for performing essential operations like addition, subtraction, multiplication, and division. The EMI calculator helps you determine your monthly installments based on loan amount, interest rate, and tenure, making it easier to manage finances. Additionally, the currency converter allows you to convert one currency to another with real-time exchange rates. The conversion tool supports various unit conversions such as storage (GB to MB), length (meters to centimeters), volume (liters to milliliters), and time (hours to minutes).
+    </p>
+</div>
+
+
+<br>
+
+    <h2>Stay connected</h2>
+    <main>
+        <div class="contact-container">
+            <form action="#" method="post">
+                <h2>Say HI</h2>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="subject">Subject:</label>
+                <input type="text" id="subject" name="subject" required>
+
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" required></textarea>
+
+                <button type="submit">Send Message</button>
+            </form>
+            <div class="contact-info">
+                <div class="footer-address">
+                    <h5>Contact Address</h5>
+                    <p><i class="fas fa-map-marker-alt"></i> Namakkal, Tamil Nadu</p>
+                    <p><i class="fas fa-phone-alt"></i> +91 7339055427</p>
+                    <p><i class="fas fa-envelope"></i> logeshnalliyappan@gmail.com</p>
+                </div>
+               
+            </div>
+        </div>
+    </main>
+    <footer class="footer">
+        <p>&copy; 2024 | All Rights Reserved | Designed and Developed by <span class="developer">Logesh.</span></p>
+    </footer>
+
+    <!-- Bootstrap JS and dependencies (jQuery, Popper.js) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
